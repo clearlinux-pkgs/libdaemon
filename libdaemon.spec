@@ -4,7 +4,7 @@
 #
 Name     : libdaemon
 Version  : 0.14
-Release  : 2
+Release  : 3
 URL      : http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz
 Source0  : http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz
 Summary  : a lightweight C library that eases the writing of UNIX daemons
@@ -69,7 +69,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536451125
+export SOURCE_DATE_EPOCH=1536493833
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -81,7 +81,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1536451125
+export SOURCE_DATE_EPOCH=1536493833
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/libdaemon
 cp LICENSE %{buildroot}/usr/share/doc/libdaemon/LICENSE
