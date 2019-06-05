@@ -4,7 +4,7 @@
 #
 Name     : libdaemon
 Version  : 0.14
-Release  : 3
+Release  : 4
 URL      : http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz
 Source0  : http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz
 Summary  : a lightweight C library that eases the writing of UNIX daemons
