@@ -4,14 +4,14 @@
 #
 Name     : libdaemon
 Version  : 0.14
-Release  : 4
+Release  : 5
 URL      : http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz
 Source0  : http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz
 Summary  : a lightweight C library that eases the writing of UNIX daemons
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: libdaemon-lib
-Requires: libdaemon-license
+Requires: libdaemon-lib = %{version}-%{release}
+Requires: libdaemon-license = %{version}-%{release}
 
 %description
 libdaemon 0.14
@@ -29,8 +29,9 @@ de>
 %package dev
 Summary: dev components for the libdaemon package.
 Group: Development
-Requires: libdaemon-lib
-Provides: libdaemon-devel
+Requires: libdaemon-lib = %{version}-%{release}
+Provides: libdaemon-devel = %{version}-%{release}
+Requires: libdaemon = %{version}-%{release}
 
 %description dev
 dev components for the libdaemon package.
@@ -47,7 +48,7 @@ doc components for the libdaemon package.
 %package lib
 Summary: lib components for the libdaemon package.
 Group: Libraries
-Requires: libdaemon-license
+Requires: libdaemon-license = %{version}-%{release}
 
 %description lib
 lib components for the libdaemon package.
@@ -63,28 +64,37 @@ license components for the libdaemon package.
 
 %prep
 %setup -q -n libdaemon-0.14
+cd %{_builddir}/libdaemon-0.14
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1536493833
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604352851
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1536493833
+export SOURCE_DATE_EPOCH=1604352851
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/libdaemon
-cp LICENSE %{buildroot}/usr/share/doc/libdaemon/LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/libdaemon
+cp %{_builddir}/libdaemon-0.14/LICENSE %{buildroot}/usr/share/package-licenses/libdaemon/9a1929f4700d2407c70b507b3b2aaf6226a9543c
 %make_install
 
 %files
@@ -112,5 +122,5 @@ cp LICENSE %{buildroot}/usr/share/doc/libdaemon/LICENSE
 /usr/lib64/libdaemon.so.0.5.0
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/libdaemon/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libdaemon/9a1929f4700d2407c70b507b3b2aaf6226a9543c
